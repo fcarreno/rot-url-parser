@@ -3,10 +3,12 @@
 ### SIMPLE URL PARSER
 
 ### Accepts two parameters (via command line)
-* `urlFormat`: composed of url path components.
+* `urlFormat`: composed of url path components.  
+
   Example: `/:version/api/:collection/:id` (variable path components start with `':'`)
 
-* `urlValue`: a string with values matching each component of the `urlFormat`, and -optionally- including query parameter/s.
+* `urlValue`: a string with values matching each component of the `urlFormat`, and -optionally- including query parameter/s.  
+
   Example: `/6/api/listings/3?sort=desc&limit=10`
 
 NOTE: at least on Windows, if specifying more than one query param (with the `&` char), the `urlValue` value needs to be wrapped in double quotes (`"`), to properly interpret it.
