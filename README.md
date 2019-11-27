@@ -32,4 +32,4 @@ Example (from values above):
 2. `npm install` (install dependencies)
 3. `node urlParser.js --urlFormat=[urlFormat] --urlValue=[urlValue]`.
 
-   Example: `node urlParser.js --urlFormat=/:version/api/:collection/:id --urlValue="/6/api/listings/3?sort=desc&limit=10"`
+   Example: `node urlparser.js --urlFormat=/:version/api/:collection/:id --urlValue="/6/api/listings/3?sort=desc&limit=10"`
