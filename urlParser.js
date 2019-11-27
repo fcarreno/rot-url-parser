@@ -1,7 +1,7 @@
 // Accepted command line params expected are:
 // --urlFormat=urlFormatString
 // --urlValue=urlValueString
-const cmdLineParsedParams = require('minimist')(process.argv.slice(2)); // Getting values starting from 3rd cmd line parameter and on (after `node index.js`)
+const cmdLineParsedParams = require('minimist')(process.argv.slice(2)); // Getting values starting from 3rd cmd line parameter and on (after `node urlParser.js`)
 
 const { urlFormat, urlValue } = cmdLineParsedParams;
 const result = parseUrl(urlFormat, urlValue);
