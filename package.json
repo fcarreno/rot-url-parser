@@ -1,7 +1,7 @@
 {
   "name": "rot-url-parser",
   "version": "1.0.0",
-  "description": "Rotunda Error Url Parser Exercise",
+  "description": "Rotunda Url Parser Exercise",
   "main": "index.js",
   "repository": {
     "type": "git",
