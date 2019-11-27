@@ -23,27 +23,23 @@ function parseUrl(urlFormat, urlValue){
         let urlValuePathComponentsString = urlValueComponents[0];
 
         // Getting individual path component/segments
-        urlPathComponents = parseUrlPathComponents(urlFormat, urlValuePathComponentsString);
+        urlPathComponents = parseUrlPathComponents(urlFormat, urlValuePathComponentsString, true);
 
+        // Getting query parameters, if present in urlValue.
         let urlValueQueryParametersString = urlValueComponents.length > 1 ? urlValueComponents[1] : '';
         if(urlValueQueryParametersString)
             urlQueryParametersComponents = parseUrlQueryParameterComponents(urlValueQueryParametersString);
 
-        // At this point, urlQueryStringComponents & urlPathComponents should all have their values mapped.
-        console.log(`Url Path Components obj= ${JSON.stringify(urlPathComponents)}`);
-        console.log(`Url Query Parameters Components obj= ${JSON.stringify(urlQueryParametersComponents)}`);
+        // At this point, urlPathComponents (variable only) and urlQueryStringComponents & should all have their values mapped.
+        console.log(`Url -variable- Path Components= ${JSON.stringify(urlPathComponents)}`);
+        console.log(`Url Query Parameters Components= ${JSON.stringify(urlQueryParametersComponents)}`);
 
-        // Keep variable path components only, for result object
-        urlPathComponents = urlPathComponents.filter(urlPathComponent => urlPathComponent.variable);
-
-        // Get rid of variable flag (not needed in result object)
-        urlPathComponents.forEach(urlPathComponent => delete urlPathComponent.variable);
+        // Consolidating all components in a single array for final mapping to result obj.
         finalUrlComponents = urlPathComponents;
-
         if(urlQueryParametersComponents)
             finalUrlComponents = finalUrlComponents.concat(urlQueryParametersComponents);
 
-        // Final map key and values to result object.
+        // Final map of components to result object.
         finalUrlComponents.forEach(urlComponent => {
             resultObject[urlComponent.key] = urlComponent.value
         });
@@ -52,16 +48,19 @@ function parseUrl(urlFormat, urlValue){
 }
 
 // Get, interpret and map each Url Path component with its corresponding value...
-function parseUrlPathComponents(urlFormat, urlValuePathComponentsString){
+function parseUrlPathComponents(urlFormat, urlValuePathComponentsString, variableOnly){
 
     let urlPathComponents = parseUrlFormatPathComponents(urlFormat);
     urlPathComponents = mapUrlPathComponentValues(urlPathComponents, urlValuePathComponentsString);
+
+    if(variableOnly)
+        urlPathComponents = urlPathComponents.filter(urlPathComponent => urlPathComponent.variable);
+
     return urlPathComponents;
 
 }
 
-// TODO: splitting with '/' and having a leading one, ends up in an empty component as the first one.
-// Mapping not taking place for some reason...
+// Getting the different Url Path Components from the url format string.
 function parseUrlFormatPathComponents(urlFormatPathComponentsString){
 
     let urlFormatPathComponents = urlFormatPathComponentsString.split('/');
@@ -73,7 +72,7 @@ function parseUrlFormatPathComponents(urlFormatPathComponentsString){
 
     urlFormatPathComponents = urlFormatPathComponents.map( urlFormatPathComponent => {
         return {
-            key: urlFormatPathComponent.replace(':', ''),
+            key: urlFormatPathComponent.replace(':', ''), // Removing the variable indicator from the component name, if present.
             variable: urlFormatPathComponent.indexOf(':') != -1
         }
     });
@@ -82,6 +81,7 @@ function parseUrlFormatPathComponents(urlFormatPathComponentsString){
 }
 
 // Assumption here is that the formats match (every component in the url format has a value)
+// Only variable values are mapped to their corresponding url path component.
 function mapUrlPathComponentValues(urlPathComponents, urlValuePathComponentsString){
 
     let urlValuePathComponents = urlValuePathComponentsString.split('/');
