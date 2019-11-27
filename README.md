@@ -11,7 +11,7 @@
 
   Example: `/6/api/listings/3?sort=desc&limit=10`
 
-NOTE: at least on Windows, if specifying more than one query param (with the `&` char), the `urlValue` value needs to be wrapped in double quotes (`"`), to properly interpret it.
+NOTE: at least on Windows, when running from command line and -if specifying more than one query param (with the `&` char)-, the `urlValue` value needs to be wrapped in double quotes (`"`), to properly interpret it.
 
 ### And returns an object/hash with its key names and values mapped to each variable url component (considering both url path components and query parameters)
 Example (from values above):
